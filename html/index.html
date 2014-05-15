@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
+    <script src="/js/vendor/jquery-1.10.2.min.js"></script>
+    <title>My Music Editor</title>
+  </head>
+  <body>
+    <section class="wrapper">
+      <header class="top">
+        <div class="logo"><img id="logo" src="/css/img/logo.png" alt="logo"></div>
+        <div class="search">
+          <input id="searchInput" type="text">
+          <button id="searchBtn" class="btn">搜索</button>
+        </div>
+      </header>
+      <section class="content">
+        <aside class="songWrapper">
+          <div class="cover"><img src="/css/cover/cover1.jpg" alt="cover"></div>
+          <div class="lrcWrapper">
+            <article class="lrc"></article>
+          </div>
+        </aside>
+        <section class="mainPanel">
+          <div class="player">
+            <audio id="player" src="/mp3/gushi.mp3"></audio><span class="currentTime">00&quot;&quot;00</span>
+            <div class="process-container"><span class="process"></span><span class="processYet"><span class="processSign"><i id="topSign" class="icon-circle"></i><i class="icon-verticalLine"></i><i id="bottomSign" class="icon-circle"></i></span></span></div><span class="allTime">00&quot;&quot;00</span>
+          </div>
+          <div class="ctrlPanel clearfix">
+            <button class="icon-cc-play"></button>
+            <button class="icon-cc-stop"></button>
+            <button class="icon-cut">
+              <z class="icon-cut-shank"></z>
+            </button>
+            <button class="icon-select"></button>
+            <button class="icon-replay"></button>
+          </div>
+          <div class="editor">
+            <div class="container clearfix">
+              <div class="seg-container"><span class="seg-audio">IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII</span></div>
+            </div>
+            <div class="operations"></div>
+          </div>
+          <div class="sList">
+            <table>
+              <thead>
+                <tr>
+                  <th>歌曲</th>
+                  <th>演唱者</th>
+                  <th>专辑</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="songInfo">
+                  <td><i class="icon-player"></i><span>心墙</span></td>
+                  <td><span>林俊杰</span></td>
+                  <td><span>《One》</span></td>
+                </tr>
+                <tr class="songInfo">
+                  <td><i class="icon-player"></i><span>心中的日月</span></td>
+                  <td><span>王力宏</span></td>
+                  <td><span>《心中的日月》</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </section>
+    <script src="/js/easyPlayer.js"></script>
+    <!--script(src='/js/easyEditor.js')-->
+    <script>
+      $(function(){
+          $('body').easyPlayer();
+          //$('body').easyEditor();
+      });
+    </script>
+  </body>
+</html>

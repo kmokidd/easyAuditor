@@ -1,0 +1,237 @@
+@import variables.sass
+
+.clearfix
+    display: inline-block
+.clearfix:after
+    visibility: hidden
+    display: block
+    font-size: 0
+    content: " "
+    clear: both
+    height: 0
+
+.btn
+    font-size: 14px
+    line-height: 14px
+    padding: 5px
+    text-align: center
+    border-radius: 3px
+    background-color: #fff
+    border: none
+    letter-spacing: 2px
+    &:hover
+        background-color: green
+        color: #fff
+
+.icon-circle
+    display: inline-block
+    width: 10px
+    height: 10px
+    background-color: #f00
+    border-radius: 100%
+
+.icon-verticalLine
+    display: inline-block
+    height: 100%
+    width: 2px
+    background-color: #f00
+
+.icon-cc-play
+    display: inline-block
+    width: 0
+    height: 0
+    border-top: 15px solid transparent
+    border-bottom: 15px solid transparent
+    border-left: 15px solid #ccc
+    border-right: 0
+    background-color: transparent
+    &:hover
+        border-left: 15px solid #aaa
+
+.icon-cc-stop
+    display: inline-block
+    width: 15px
+    height: 30px
+    border-right: 5px solid #ccc
+    border-left: 5px solid #ccc
+    border-top: 0
+    border-bottom: 0
+    background-color: transparent
+    &:hover
+        border-right: 5px solid #aaa
+        border-left: 5px solid #aaa
+
+.icon-cut
+    display: inline-block
+    position: relative
+    width: 15px
+    height: 20px
+    border: 0
+    background-color: #ccc
+    -webkit-transform: rotate(30deg)
+    transform: rotate(30deg)
+    .icon-cut-shank
+        display: inline-block
+        position: absolute
+        bottom: -8px
+        right: 0
+        height: 8px
+        width: 3px
+        border-radius: 3px
+        background-color: brown
+    &:hover
+        background-color: #aaa
+
+.icon-select
+    display: inline-block
+    position: relative
+    width: 25px
+    height: 15px
+    background-color: transparent
+    border: none
+    border-left: 3px solid #ccc
+    border-bottom: 3px solid #ccc
+    -webkit-transform: rotate(-60deg)
+    transform: rotate(-60deg)
+    &:hover
+        border-left: 3px solid #aaa
+        border-bottom: 3px solid #aaa
+
+
+
+.wrapper
+    width: 100%
+
+.top
+    overflow: hidden
+    background: url('/css/img/topBG.png') repeat 0 0
+    height: 50px
+    padding: 0 $outer_pd
+    font-size: 0
+    .logo,
+    .search
+        display: inline-block
+        margin-right: $inner_mr
+        height: 100%
+        font-size: 14px
+        padding-top: 10px
+    .logo
+        vertical-align: bottom
+        width: $aside_w+2*$aside_h_pd
+    #searchInput
+        display: inline-block
+        width: 200px
+        height: 30%
+        border-radius: 5px
+        padding: 5px
+        border: none
+        margin-right: 20px
+
+.content
+    padding: 20px $outer_pd
+    overflow: hidden
+    .songWrapper
+        float: left
+        margin-right: $inner_mr
+        width: $aside_w
+    .cover
+        text-align: center
+        img
+            display: inline-block
+            width: 80%
+    .lrcWrapper
+        position: relative
+        border: 1px solid #ccc
+        padding: 10px $aside_h_pd
+        overflow: auto
+        height: 350px
+    .lrc
+        position: absolute
+        top: 0
+        left: 10px
+        transition: top 0.5s ease-in
+        p
+            font-size: 1.2rem
+            line-height: 24px
+            margin: 5px 0
+        .focus
+            color: #f00
+    .mainPanel
+        float: left
+        width: 100%-($aside_w)-(2*$outer_pd)
+
+
+.player
+    margin-bottom: $section_mb
+    .currentTime,
+    .allTime
+        font-size: 20px
+    .process-container
+        position: relative
+        display: inline-block
+        width: 85%
+        height: 40px
+        margin: 0 10px
+        vertical-align: bottom
+        &:hover
+            .processSign
+                display: inline-block
+    .process,
+    .processYet
+        display: inline-block
+        width: 100%
+        height: 100%
+        border-radius: 2px
+        background-color: #eee
+        cursor: pointer
+    .process
+        border: 1px dashed #eee
+    .processYet
+        position: absolute
+        top: 1px
+        left: 1px
+        z-index: 10
+        width: 10%
+        background-color: #fff
+    .processSign
+        display: none
+    .icon-verticalLine
+        position: absolute
+        right: -2px
+        top: 0
+    .icon-circle
+        position: absolute
+        right: -6px
+    #topSign
+        top: -5px
+    #bottomSign
+        bottom: -5px
+
+.ctrlPanel
+    margin-bottom: $section_mb
+    button
+        float: left
+        margin-right: 20px
+
+.editor
+    width: 100%
+    height: 50px
+    margin-bottom: $section_mb
+    .container
+        width: 100%
+        height: 100%
+        border: 1px solid #ccc
+    .seg-container
+        display: inline-block
+        width: 20%
+        height: (50px)-((50px)-(14px)-(2px))
+        background-color: rgba(15, 17, 154, 0.3)
+        border-right: 1px solid #f00
+        text-align: center
+        padding: ((50px)-(14px)-(2px))/2
+        overflow: hidden
+        word-wrap: break-word
+    .seg-audio
+        font-weight: bold
+        font-size: 14px
+        color: rgb(15, 17, 154)
