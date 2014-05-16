@@ -24,10 +24,10 @@ requires jQuery 1.8+
             songId: null,
             artist: null,
             track: null,
-            albun: null,
+            album: null,
             picture_path: null,
-            lrc_path: '/lrc/xinqiang.lrc',
-            audio_path: '/mp3/xinqiang.mp3'
+            lrc_path: null,
+            audio_path: null
         },
         playerCtrlClass: {
             singer: 'singer',
@@ -43,6 +43,7 @@ requires jQuery 1.8+
             prevSong: 'prevS',
             nextSong: 'nextS',
             songItem: 'songInfo',
+            songList: 'sList',
             lrc: 'lrc'
         }
     };
@@ -63,6 +64,27 @@ requires jQuery 1.8+
                 snd = snd>=10? snd: '0'+snd;
                 return min+":"+ snd;
             }
+        },
+        infoParser: function(originalData){
+            var songInfo = {
+                songId: null,
+                artist: null,
+                track: null,
+                album: null,
+                picture_path: null,
+                lrc_path: null,
+                audio_path: null
+            };
+            var temp = originalData.split('_');
+            songInfo.songId = temp[0];
+            songInfo.artist = temp[1];
+            songInfo.album = temp[2];
+            songInfo.track = temp[3];
+            songInfo.picture_path = temp[4];
+            songInfo.lrc_path = temp[5];
+            songInfo.music_path = temp[6];
+
+            return songInfo;
         },
         reset: function($processYet, $currentTime, $duration, $mainControl){
             $processYet.width('0');
@@ -119,8 +141,6 @@ requires jQuery 1.8+
             _privateMethods.play(settings);
         },
         prevSong: function(settings){
-
-            // settings.songInfo.audio_path = 
         },
         nextSong: function(settings){
 
@@ -218,7 +238,6 @@ requires jQuery 1.8+
     var methods = {
         init: function(options){
             var settings = $.extend({}, _defaults, options);
-            console.log(settings);
             _privateMethods.reset($('.'+settings.playerCtrlClass.processYet), $('.'+settings.playerCtrlClass.currentTime), $('.'+settings.playerCtrlClass.duration), $('.'+settings.playerCtrlClass.mainCtrl));
             settings.audio.src = settings.songInfo.audio_path;
 
@@ -239,8 +258,17 @@ requires jQuery 1.8+
             //bind events
             $('.'+settings.playerCtrlClass.playCtrl).on('click', function() { _privateMethods.play(settings);});
             $('.'+settings.playerCtrlClass.pauseCtrl).on('click', function() { _privateMethods.pause(settings);});
-            $('.'+settging.playerCtrlClass.prevS).on('click', function(){ _privateMethods.prevSong(settings);});
-            $('.'+settging.playerCtrlClass.nextS).on('click', function(){ _privateMethods.nextSong(settings);});
+            $('.'+settings.playerCtrlClass.songList).delegate(('.'+settings.playerCtrlClass.songItem), 'click', function(event){
+                var originData = $(this).data('info');
+                var songSettings = _privateMethods.infoParser(originData);
+                var newSettings = $.extend({}, _defaults, songSettings);
+                console.log(newSettings);
+                
+                _privateMethods.play(newSettings);
+            });
+
+            /*$('.'+settging.playerCtrlClass.prevS).on('click', function(){ _privateMethods.prevSong(settings);});
+            $('.'+settging.playerCtrlClass.nextS).on('click', function(){ _privateMethods.nextSong(settings);});*/
 
             return this;
         }

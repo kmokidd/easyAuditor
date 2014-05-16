@@ -1,3 +1,7 @@
+body {
+  font-family: "ff-tisa-web-pro-1", "ff-tisa-web-pro-2", "Lucida Grande", "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", "WenQuanYi Micro Hei", sans-serif;
+}
+
 .clearfix {
   display: inline-block;
 }
@@ -132,7 +136,7 @@
 }
 .top .logo {
   vertical-align: bottom;
-  width: 22%;
+  width: 18%;
 }
 .top #searchInput {
   display: inline-block;
@@ -260,6 +264,7 @@
   width: 100%;
   height: 100%;
   border: 1px solid #cccccc;
+  font-size: 0;
 }
 .editor .seg-container {
   display: inline-block;
@@ -276,4 +281,32 @@
   font-weight: bold;
   font-size: 14px;
   color: #0f119a;
+}
+
+.sList {
+  font-size: 16px;
+  width: 100%;
+}
+.sList table {
+  width: 100%;
+  border-spacing: 2px;
+  border-collapse: collapse;
+  border-color: gray;
+}
+.sList .sItem tr {
+  font-size: 18px;
+}
+.sList .sItem th {
+  font-weight: bold;
+}
+.sList .sItem th,
+.sList .sItem td {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dddddd;
+  padding: 8px;
+  text-align: left;
+}
+.sList .sItem tbody tr:hover {
+  background-color: #eeeeee;
+  cursor: pointer;
 }
