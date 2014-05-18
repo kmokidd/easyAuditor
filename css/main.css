@@ -208,6 +208,11 @@ body {
 .player .process-container:hover .processSign {
   display: inline-block;
 }
+.player .process-container .icon-cut {
+  position: absolute;
+  top: 10px;
+  z-index: 101;
+}
 .player .process,
 .player .processYet {
   display: inline-block;
@@ -268,16 +273,16 @@ body {
 }
 .editor .seg-container {
   display: inline-block;
-  width: 20%;
   height: 16px;
   background-color: rgba(15, 17, 154, 0.3);
   border-right: 1px solid red;
   text-align: center;
-  padding: 17px;
+  padding: 17px 0;
   overflow: hidden;
   word-wrap: break-word;
 }
 .editor .seg-audio {
+  display: inline-block;
   font-weight: bold;
   font-size: 14px;
   color: #0f119a;

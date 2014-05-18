@@ -26,8 +26,8 @@ requires jQuery 1.8+
             track: null,
             album: null,
             picture_path: null,
-            lrc_path: null,
-            audio_path: null
+            lrc_path: '/lrc/xinqiang.lrc',
+            audio_path: '/mp3/xinqiang.mp3'
         },
         playerCtrlClass: {
             singer: 'singer',
@@ -66,30 +66,33 @@ requires jQuery 1.8+
             }
         },
         infoParser: function(originalData){
-            var songInfo = {
-                songId: null,
-                artist: null,
-                track: null,
-                album: null,
-                picture_path: null,
-                lrc_path: null,
-                audio_path: null
-            };
+            var newData = {
+                    songInfo:{
+                        songId: null,
+                        artist: null,
+                        track: null,
+                        album: null,
+                        picture_path: null,
+                        lrc_path: null,
+                        audio_path: null
+                    }
+                };
             var temp = originalData.split('_');
-            songInfo.songId = temp[0];
-            songInfo.artist = temp[1];
-            songInfo.album = temp[2];
-            songInfo.track = temp[3];
-            songInfo.picture_path = temp[4];
-            songInfo.lrc_path = temp[5];
-            songInfo.music_path = temp[6];
+            newData.songInfo.songId = temp[0];
+            newData.songInfo.artist = temp[1];
+            newData.songInfo.track = temp[2];
+            newData.songInfo.album = temp[3];
+            newData.songInfo.picture_path = temp[4];
+            newData.songInfo.lrc_path = temp[5];
+            newData.songInfo.audio_path = temp[6];
 
-            return songInfo;
+            return newData;
         },
         reset: function($processYet, $currentTime, $duration, $mainControl){
             $processYet.width('0');
             $currentTime.html('00:00');
             $duration.html('00:00');
+            $processYet.siblings('.icon-cut').remove();
 
             $mainControl.find('.'+_defaults.playerCtrlClass.playCtrl).css('display', 'inline-block');
             $mainControl.find('.'+_defaults.playerCtrlClass.pauseCtrl).css('display', 'none');
@@ -238,8 +241,12 @@ requires jQuery 1.8+
     var methods = {
         init: function(options){
             var settings = $.extend({}, _defaults, options);
+            console.log(settings);
+
             _privateMethods.reset($('.'+settings.playerCtrlClass.processYet), $('.'+settings.playerCtrlClass.currentTime), $('.'+settings.playerCtrlClass.duration), $('.'+settings.playerCtrlClass.mainCtrl));
             settings.audio.src = settings.songInfo.audio_path;
+            settings.audio.muted = true;
+            //console.log(settings.audio.src);
 
             //Get LRC
             _privateMethods.lrcHandler.getLrc(settings);
@@ -254,6 +261,11 @@ requires jQuery 1.8+
             settings.audio.addEventListener('timeupdate', function(){
                 _privateMethods.setTimeUpdate(settings);
             });
+            return this;
+        },
+        bindEvents: function(options){
+            var settings = $.extend(true, _defaults, options);
+            methods.init(settings);
 
             //bind events
             $('.'+settings.playerCtrlClass.playCtrl).on('click', function() { _privateMethods.play(settings);});
@@ -261,14 +273,12 @@ requires jQuery 1.8+
             $('.'+settings.playerCtrlClass.songList).delegate(('.'+settings.playerCtrlClass.songItem), 'click', function(event){
                 var originData = $(this).data('info');
                 var songSettings = _privateMethods.infoParser(originData);
-                var newSettings = $.extend({}, _defaults, songSettings);
-                console.log(newSettings);
-                
-                _privateMethods.play(newSettings);
-            });
+                var newSettings = $.extend(true, _defaults, songSettings);
 
-            /*$('.'+settging.playerCtrlClass.prevS).on('click', function(){ _privateMethods.prevSong(settings);});
-            $('.'+settging.playerCtrlClass.nextS).on('click', function(){ _privateMethods.nextSong(settings);});*/
+                methods.init(newSettings);
+                settings = $.extend(true, _defaults, newSettings);
+            });
+            $('body').easyEditor(settings.songInfo);
 
             return this;
         }
@@ -282,7 +292,8 @@ requires jQuery 1.8+
         if(!this.length) return this;
 
         if(typeof method==='object' || !method){
-            return methods.init.apply(this, arguments);
+            //return methods.init.apply(this, arguments);
+            return methods.bindEvents.apply(this, arguments);
         }else{
             $.error('Method '+method+" does not exist on jQuery easyPlayer!");
         }
