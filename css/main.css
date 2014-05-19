@@ -74,6 +74,14 @@ body {
   border-left: 5px solid #aaaaaa;
 }
 
+.icon-cc-prev,
+.icon-cc-next {
+  display: inline-block;
+  width: 15px;
+  height: 30px;
+  border: 1px solid red;
+}
+
 .icon-cut {
   display: inline-block;
   position: relative;
@@ -297,6 +305,9 @@ body {
   border-spacing: 2px;
   border-collapse: collapse;
   border-color: gray;
+}
+.sList .curSong {
+  background-color: #eeeeee;
 }
 .sList .sItem tr {
   font-size: 18px;

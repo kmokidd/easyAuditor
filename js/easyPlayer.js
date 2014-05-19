@@ -40,10 +40,11 @@ requires jQuery 1.8+
             currentTime: 'currentTime',
             process: 'process',
             processYet: 'processYet',
-            prevSong: 'prevS',
-            nextSong: 'nextS',
+            prevSong: 'icon-cc-prev',
+            nextSong: 'icon-cc-next',
             songItem: 'songInfo',
             songList: 'sList',
+            lrcWrapper: 'lrcWrapper',
             lrc: 'lrc'
         }
     };
@@ -88,7 +89,7 @@ requires jQuery 1.8+
 
             return newData;
         },
-        reset: function($processYet, $currentTime, $duration, $mainControl){
+        reset: function($processYet, $currentTime, $duration, $mainControl, $lrcWrapper){
             $processYet.width('0');
             $currentTime.html('00:00');
             $duration.html('00:00');
@@ -96,6 +97,9 @@ requires jQuery 1.8+
 
             $mainControl.find('.'+_defaults.playerCtrlClass.playCtrl).css('display', 'inline-block');
             $mainControl.find('.'+_defaults.playerCtrlClass.pauseCtrl).css('display', 'none');
+
+            //adjust lrc position
+            $lrcWrapper.animate({scrollTop: 0}, 500);
         },
         play: function(settings){
             settings.audio.play();
@@ -143,10 +147,25 @@ requires jQuery 1.8+
             $processYet.width(toWhere);
             _privateMethods.play(settings);
         },
-        prevSong: function(settings){
-        },
-        nextSong: function(settings){
+        prevSong: function($currentNode){
+            var prevData = $currentNode.prev().addClass('curSong').data('info'),
+                songSettings = _privateMethods.infoParser(prevData),
+                newSettings = $.extend(true, _defaults, songSettings);
 
+            $currentNode.removeClass('curSong');
+            methods.init(newSettings);
+            settings = $.extend(true, _defaults, newSettings);
+            _privateMethods.play(newSettings);
+        },
+        nextSong: function($currentNode){
+            var nextData = $currentNode.next().addClass('curSong').data('info'),
+                songSettings = _privateMethods.infoParser(nextData),
+                newSettings = $.extend(true, _defaults, songSettings);
+
+            $currentNode.removeClass('curSong');
+            methods.init(newSettings);
+            settings = $.extend(true, _defaults, newSettings);
+            _privateMethods.play(newSettings);
         },
         lrcHandler:{
             getLrc: function(settings){
@@ -243,9 +262,9 @@ requires jQuery 1.8+
             var settings = $.extend({}, _defaults, options);
             console.log(settings);
 
-            _privateMethods.reset($('.'+settings.playerCtrlClass.processYet), $('.'+settings.playerCtrlClass.currentTime), $('.'+settings.playerCtrlClass.duration), $('.'+settings.playerCtrlClass.mainCtrl));
+            _privateMethods.reset($('.'+settings.playerCtrlClass.processYet), $('.'+settings.playerCtrlClass.currentTime), $('.'+settings.playerCtrlClass.duration), $('.'+settings.playerCtrlClass.mainCtrl), $('.'+settings.playerCtrlClass.lrcWrapper));
             settings.audio.src = settings.songInfo.audio_path;
-            settings.audio.muted = true;
+            // settings.audio.muted = true;
             //console.log(settings.audio.src);
 
             //Get LRC
@@ -256,7 +275,8 @@ requires jQuery 1.8+
             });
             settings.audio.addEventListener('ended', function(){
                 console.log("end!!!");
-                _privateMethods.reset($('.'+settings.playerCtrlClass.processYet), $('.'+settings.playerCtrlClass.currentTime), $('.'+settings.playerCtrlClass.duration), $('.'+settings.playerCtrlClass.mainCtrl));
+                _privateMethods.reset($('.'+settings.playerCtrlClass.processYet), $('.'+settings.playerCtrlClass.currentTime), $('.'+settings.playerCtrlClass.duration), $('.'+settings.playerCtrlClass.mainCtrl), $('.'+settings.playerCtrlClass.lrcWrapper));
+                _privateMethods.nextSong($('.curSong'));
             });
             settings.audio.addEventListener('timeupdate', function(){
                 _privateMethods.setTimeUpdate(settings);
@@ -270,13 +290,18 @@ requires jQuery 1.8+
             //bind events
             $('.'+settings.playerCtrlClass.playCtrl).on('click', function() { _privateMethods.play(settings);});
             $('.'+settings.playerCtrlClass.pauseCtrl).on('click', function() { _privateMethods.pause(settings);});
+            $('.'+settings.playerCtrlClass.prevSong).on('click', function(){ _privateMethods.prevSong($('.curSong'));})
+            $('.'+settings.playerCtrlClass.nextSong).on('click', function(){ _privateMethods.nextSong($('.curSong'));})
             $('.'+settings.playerCtrlClass.songList).delegate(('.'+settings.playerCtrlClass.songItem), 'click', function(event){
-                var originData = $(this).data('info');
+                $(this).siblings().removeClass('curSong');
+
+                var originData = $(this).addClass('curSong').data('info');
                 var songSettings = _privateMethods.infoParser(originData);
                 var newSettings = $.extend(true, _defaults, songSettings);
 
                 methods.init(newSettings);
                 settings = $.extend(true, _defaults, newSettings);
+                _privateMethods.play(newSettings);
             });
             $('body').easyEditor(settings.songInfo);
 
