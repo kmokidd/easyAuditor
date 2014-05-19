@@ -77,9 +77,24 @@ body {
 .icon-cc-prev,
 .icon-cc-next {
   display: inline-block;
-  width: 15px;
+  width: 27px;
   height: 30px;
-  border: 1px solid red;
+  background-color: transparent;
+  border: 0;
+}
+.icon-cc-prev:hover .icon-cc-play,
+.icon-cc-next:hover .icon-cc-play {
+  border-left: 10px solid #aaaaaa;
+}
+.icon-cc-prev .icon-cc-play,
+.icon-cc-next .icon-cc-play {
+  border-left: 10px solid #cccccc;
+  margin-right: 1px;
+}
+
+.icon-cc-prev {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 .icon-cut {

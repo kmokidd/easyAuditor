@@ -105,8 +105,8 @@ requires jQuery 1.8+
             settings.audio.play();
             var $ctrl = $('.'+settings.playerCtrlClass.mainCtrl);
 
-            $ctrl.find('.'+settings.playerCtrlClass.playCtrl).css('display', 'none');
-            $ctrl.find('.'+settings.playerCtrlClass.pauseCtrl).css('display', 'inline-block');
+            $ctrl.children('.'+settings.playerCtrlClass.playCtrl).css('display', 'none');
+            $ctrl.children('.'+settings.playerCtrlClass.pauseCtrl).css('display', 'inline-block');
         },
         pause: function(settings){
             settings.audio.pause();
@@ -303,6 +303,7 @@ requires jQuery 1.8+
                 settings = $.extend(true, _defaults, newSettings);
                 _privateMethods.play(newSettings);
             });
+
             $('body').easyEditor(settings.songInfo);
 
             return this;
